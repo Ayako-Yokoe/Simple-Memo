@@ -20,37 +20,29 @@ Route::get('/', function () {
 });
 
 // Show All Memos
-Route::get('/memos', [MemosController::class, 'index'])->name('memos.index');
+Route::get('/memos', [MemosController::class, 'index'])->name('memos.index')->middleware('auth');
 
 // Show Create form
 // Route::get('/memos/create', [MemosController::class, 'create'])
 
 // Store Newly Created Memo
-// Route::post('/memos/create', [MemosController::class, 'store'])
-Route::post('/memos/store', [MemosController::class, 'store']);
+Route::post('/memos/store', [MemosController::class, 'store'])->middleware('auth');
 
 
 // Show Single Memo
-Route::get('/memos/{id}/edit', [MemosController::class, 'show']);
-// // OR
-// Route::get('/memos/{memo}', [MemosController::class, 'show'])
+Route::get('/memos/{id}/edit', [MemosController::class, 'show'])->middleware('auth');
 
 
 // Show Edit Form
 // Route::get('/memos', [MemosController::class, 'edit']);
 
  // Update Memo
- Route::put('/memos/{id}/edit', [MemosController::class, 'update']);
-
- // OR
-//  Route::put('/memos/{memo}', [MemosController::class, 'update'])
+ Route::put('/memos/{id}/edit', [MemosController::class, 'update'])->middleware('auth');
 
 
 // Delete Memo
-Route::delete('/memos/{id}', [MemosController::class, 'destroy']);
+Route::delete('/memos/{id}', [MemosController::class, 'destroy'])->middleware('auth');
 
-// OR
-// Route::delete('/memos/{memo}', [MemosController::class, 'destroy'])
 
 
 // Register/Log in
@@ -62,10 +54,10 @@ Route::get('/register', [UserController::class, 'create']);
 Route::post('/users', [UserController::class, 'store']);
 
 // Log User Out
-Route::post('/logout', [UserController::class, 'logout']);
+Route::post('/logout', [UserController::class, 'logout'])->middleware('auth');
 
 // Show Login Form
-Route::get('/login', [UserController::class, 'login']);
+Route::get('/login', [UserController::class, 'login'])->name('users.login');
 
 // Log In User
 Route::post('/users/authenticate', [UserController::class, 'authenticate']);

@@ -1,27 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <div>
+<x-layout>
+    <x-card>
         <h1>Log In</h1>
 
         <form method="POST" action="/users/authenticate">
-            <label for="email">email</label>
-            <input id="email" type="email" name="email" /><br>
-            <label for="password">password</label>
-            <input id="password" type="password" name="password" /><br>
-            <label for="checkbox">Remember Me</label>
-            <input id="checkbox" type="checkbox" name="rememberMe" /><br>
-
-            <button type="submit">Log In</button>
-            <a href="#">Forgot Password?</a>
+            @csrf
+            <div>
+                <label for="email">email</label>
+                <input type="email" name="email" />
+            </div>
+            <div>
+                <label for="password">password</label>
+                <input type="password" name="password" />
+            </div>
+            <div>
+                <label for="checkbox">Remember Me</label>
+                <input id="checkbox" type="checkbox" name="remember" />
+            </div>
+            <div>
+                <button type="submit">Log In</button>
+                <a href="#">Forgot Password?</a>
+            </div>
         </form>
-    </div>
-    
-</body>
-</html>
+    </x-card>
+</x-layout>

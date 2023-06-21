@@ -14,16 +14,16 @@ class UserController extends Controller
 
     // Create New User
     public function store(Request $request){
-        $formFields = $request->validate([
+        $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => 'required',
         ]);
 
         // Hash Password
-        $formFields['password'] = bcrypt($formFields['password']);
+        $credentials['password'] = bcrypt($credentials['password']);
 
         // Create User
-        $user = User::create($formFields);
+        $user = User::create($credentials);
 
         // Log In
         auth()->login($user);
@@ -48,14 +48,16 @@ class UserController extends Controller
 
     // Log In User
     public function authenticate(Request $request){
-        $formFields = $request->validate([
+        $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => 'required',
         ]);
 
-        if(auth()->attempt($formFields)){
-            $request->session()->regenerate();
+        // Remember Me
+        $remember = $request->has('remember');
 
+        if(auth()->attempt($credentials, $remember)){
+            $request->session()->regenerate();
             return redirect()->route('memos.index');
         }
 

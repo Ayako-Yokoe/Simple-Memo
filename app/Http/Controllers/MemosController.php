@@ -9,7 +9,10 @@ class MemosController extends Controller
 {
     // Show All Memos
     public function index(){
-        $memos = Memos::orderBy('id', 'asc')->get();
+
+        $user = auth()->user();
+        $memos = $user->memos()->orderBy('id', 'asc')->get();
+
         return view('memos.index', ['memos' => $memos]);
     }
 
@@ -26,15 +29,18 @@ class MemosController extends Controller
             'memo.max' => 'The memo should not exceed 100 characters.'
         ]);
 
-        Memos::create($formFields);
-        $memos = Memos::orderBy('id', 'asc')->get();
+        $user = auth()->user();
+        $user->memos()->create($formFields);
+        // $memos = Memos::orderBy('id', 'asc')->get();
 
-        return redirect()->route('memos.index');
+        return redirect()->route('memos.index', ['refresh' => 1]);
     }
 
     // Show Single Memo
     public function show($id){
-        $memo = Memos::findOrFail($id);
+        $user = auth()->user();
+        $memo = $user->memos()->findOrFail($id);
+
         return view('memos.edit', ['memo' => $memo]);
     }
 
@@ -49,21 +55,36 @@ class MemosController extends Controller
 
     // Update Memo
     public function update(Request $request, $id){
-        $request->validate([
-            'memo' => 'required'
+        $formFields = $request->validate([
+            'memo' => 'required|max:100'
+        ], [
+            'memo.max' => 'The memo should not exceed 100 characters.'
         ]);
 
-        Memos::where('id', $id)->update([
-            'memo' => $request->input('memo')
-        ]);
+        $user = auth()->user();
+        $memo = $user->memos()->find($id);
+
+        if($memo){
+            $memo->memo = $formFields['memo'];
+            $memo->save();
+        }
+
+        // Memos::where('id', $id)->update([
+        //     'memo' => $formFields['memo']
+        // ]);
 
         return redirect()->route('memos.index');
     }
 
     // Delete Memo
     public function destroy($id){
-        
-        Memos::findOrFail($id)->delete();
+
+        $user = auth()->user();
+        $memo = $user->memos()->find($id);
+
+        if($memo){
+            $memo->delete();
+        }
 
         return redirect()->route('memos.index');
     }

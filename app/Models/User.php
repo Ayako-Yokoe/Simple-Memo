@@ -41,4 +41,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    // Relationships With Memos
+    public function memos(){
+        return $this->hasMany(Memos::class, 'user_id');
+    }
 }
