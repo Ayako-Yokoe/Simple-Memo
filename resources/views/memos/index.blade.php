@@ -17,17 +17,13 @@
                 </button>
 
                 @error('memo')
-                    @if ($message === 'This memo field is required.')
-                        <p class="text-red-500 text-xs mt-1">
-                            必須項目になります
-                        </p>
-                    @elseif($message === 'The memo should not exceed 100 characters.')
+                    @if($message === 'The memo should not exceed 100 characters.')
                         <p class="text-red-500 text-xs mt-1">
                             １００字以内となります
                         </p>
                     @else
                         <p class="text-red-500 text-xs mt-1">
-                            {{$message}}
+                            必須項目になります
                         </p>
                     @endif
                 @enderror
