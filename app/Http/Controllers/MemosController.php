@@ -9,17 +9,11 @@ class MemosController extends Controller
 {
     // Show All Memos
     public function index(){
-
         $user = auth()->user();
         $memos = $user->memos()->orderBy('id', 'asc')->get();
 
         return view('memos.index', ['memos' => $memos]);
     }
-
-    // Show Create Form
-    // public function create(){
-    //     return view('memos.create')
-    // }
 
     // Store Newly Created Memo
     public function store(Request $request){
@@ -31,7 +25,6 @@ class MemosController extends Controller
 
         $user = auth()->user();
         $user->memos()->create($formFields);
-        // $memos = Memos::orderBy('id', 'asc')->get();
 
         return redirect()->route('memos.index', ['refresh' => 1]);
     }
@@ -43,15 +36,6 @@ class MemosController extends Controller
 
         return view('memos.edit', ['memo' => $memo]);
     }
-
-    // Show Edit Form
-    // public function edit(Memos $memo){
-    //     return view('memos.edit');
-
-    //     //OR
-    //     // return view('memos.edit', ['memo' => $memo])
-    // }
-
 
     // Update Memo
     public function update(Request $request, $id){
@@ -69,10 +53,6 @@ class MemosController extends Controller
             $memo->save();
         }
 
-        // Memos::where('id', $id)->update([
-        //     'memo' => $formFields['memo']
-        // ]);
-
         return redirect()->route('memos.index');
     }
 
@@ -89,4 +69,3 @@ class MemosController extends Controller
         return redirect()->route('memos.index');
     }
 }
-

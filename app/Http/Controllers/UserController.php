@@ -61,6 +61,6 @@ class UserController extends Controller
             return redirect()->route('memos.index');
         }
 
-        return back();
+        return back()->withErrors(['email' => '入力情報に誤りがあります'])->onlyInput('email');
     }
 }

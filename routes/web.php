@@ -16,33 +16,23 @@ use App\Http\Controllers\MemosController;
 */
 
 Route::get('/', function () {
-    return view('layout');
+    return view('users/login');
 });
 
 // Show All Memos
 Route::get('/memos', [MemosController::class, 'index'])->name('memos.index')->middleware('auth');
 
-// Show Create form
-// Route::get('/memos/create', [MemosController::class, 'create'])
-
 // Store Newly Created Memo
 Route::post('/memos/store', [MemosController::class, 'store'])->middleware('auth');
-
 
 // Show Single Memo
 Route::get('/memos/{id}/edit', [MemosController::class, 'show'])->middleware('auth');
 
-
-// Show Edit Form
-// Route::get('/memos', [MemosController::class, 'edit']);
-
  // Update Memo
  Route::put('/memos/{id}/edit', [MemosController::class, 'update'])->middleware('auth');
 
-
 // Delete Memo
 Route::delete('/memos/{id}', [MemosController::class, 'destroy'])->middleware('auth');
-
 
 
 // Register/Log in

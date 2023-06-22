@@ -1,31 +1,35 @@
 <x-layout>
     <x-card>
-        <h1>Register</h1>
+        <h2 class="bg-gray-300 p-5 pl-7">新規登録</h2>
 
-        <form method="POST" action="/users">
+        <form method="POST" action="/users" class="max-w-xs mx-auto">
             @csrf
 
-            <div>
-                <label for="email">email</label>
-                <input type="email" name="email" value="{{old('email')}}" />
+            <div class="flex justify-between mt-8">
+                <label for="email">メールアドレス</label>
+                <input type="email" name="email" value="{{old('email')}}" class="border border-gray-300 rounded p-1 pl-2" />
 
                 @error('email')
-                    {{ $message }}
+                    <p class="text-red-500 text-xs mt-1">必須項目になります</p>
                 @enderror
             </div>
 
-            <div>
-                <label for="password">password</label>
-                <input type="password" name="password" value="{{old('password')}}" />
+            <div class="flex justify-between mt-8">
+                <label for="password">パスワード</label>
+                <input type="password" name="password" value="{{old('password')}}" class="border border-gray-300 rounded p-1 pl-2" />
 
                 @error('password')
-                    {{ $message }}
+                    <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                 @enderror
             </div>
 
-            <div>
-                <button type="submit">Register</button>
-                <a href="/login">Already have an account?</a>
+            <div class="text-center mt-8 mb-10">
+                <button type="submit" class="bg-blue-700 text-white rounded px-3 py-1 hover:text-blue-700 hover:bg-white border-2 border-blue-700">
+                    新規登録
+                </button>
+                <a href="/login">
+                    <span class="text-blue-300 ml-2">アカウントをお持ちですか？</span>
+                </a>
             </div>
         </form>
     </x-card>
